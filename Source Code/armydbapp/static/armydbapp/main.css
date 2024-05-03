@@ -1,0 +1,55 @@
+/* .card {
+    width: 60%;
+    margin: auto;
+}
+
+footer.card-footer{
+    padding: 4px;
+}
+
+.buy-form{
+    margin: auto;
+
+}
+
+.section {
+    width: fit-content;
+    margin: auto;
+}
+.container {
+    width: fit-content;
+} */
+
+.color-palette{
+    color: #689a67;
+    color: #505050;
+    color: brown;
+    color: yellowgreen;
+}
+
+body{
+    background: lightgrey;
+    height: 100vh;
+    width: 100vw;
+    font-family: adobe-arabic !important;
+}
+
+section{
+    background: lightgrey;
+}
+
+input, button{
+    font-family: adobe-arabic !important;
+}
+
+
+
+.table thead th{font-size: 1.2rem !important;}
+
+.table td{font-size: 1.2rem !important;}
+
+
+@font-face {
+    font-family: adobe-arabic;
+    src: url(adobearabic.ttf);
+}

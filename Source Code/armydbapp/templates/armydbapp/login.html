@@ -1,0 +1,39 @@
+{% extends "armydbapp/base.html" %}
+{% block content %}
+<div class="columns">
+  <div class="column">
+    <nav class="panel login-container">
+      <p class="panel-heading text-center login-header"><span><strong>تسجيل الدخول</strong></span></p>
+      <div class="panel-block login-form">
+        <form action="{% url 'armydbapp:loguser' %}" method="post" style="margin:auto;">
+          {% csrf_token %}
+            <div class="field">
+              <label class="label login-label" style="text-align: right;">الاسم</label>
+              <div class="control has-icons-left">
+                <input class="input" type="text" placeholder="الاسم" name="username" >
+                <span class="icon is-small is-left"><i class="fas fa-user"></i></span>
+              </div>
+            </div>
+            <div class="field">
+              <label class="label login-label" style="text-align: right;">كلمة المرور</label>
+              <div class="control has-icons-left">
+                <input class="input" name="password" placeholder="كلمة المرور" type="password">
+                <span class="icon is-small is-left"><i class="fas fa-lock"></i></span>
+              </div>
+            </div>
+            <div>
+              {% if error %}
+                <h1 class="login-error">{{ error }}</h1>
+              {% endif %}
+            </div>
+            <div class="field">
+              <div class="control">
+                <button class="button is-success is-outlined is-fullwidth login-form-button" type="submit" value="Login">تسجيل دخول</button>&nbsp;
+              </div>
+            </div>
+          </form>
+        </div>
+  </nav>
+  </div>
+</div>
+{% endblock content %}

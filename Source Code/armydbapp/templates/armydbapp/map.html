@@ -1,0 +1,77 @@
+{% extends "armydbapp/soldier_admin_base.html" %}
+{% block content %}
+{% load static %}
+{% load i18n %}
+
+{% if error %}
+    <h3 style="color: red">{{ error }}</h3>
+{% endif %}
+<style>
+
+  
+h1{
+  font-size: 35px;
+}
+table {
+  width:70%;
+}
+table, th, td {
+  font-size: 1.25rem;
+  margin: auto;
+  padding:1%;
+  direction: rtl;
+  border-style: ridge;
+  border: 5px solid #689a67;
+  text-align: center;
+}
+
+
+@keyframes wiwa {
+    0% { background-color: red; }
+    100% { background-color: white; }
+}
+  
+</style>
+
+
+    
+
+
+<div class="col-12 col-md-3 mbr-fonts-style display-7">
+      <p class="mbr-text">
+          <strong class="arabic">النقطة : {{working_map}}</strong>
+      {% for soldier in soldier_list_filtered %}
+      <br><a href="{% url 'armydbapp:soldier_information' %}?soldier_id={{soldier.soldier_id}}">{{soldier.name}}</a>    
+      {% endfor %}
+      </p>
+      
+  </div>
+  <div class="col-12 col-md-6">
+      {% for x in company %}
+      {% if x.company_name == "السرية الأولي" %}
+      <img src="{% static 'armydbapp/images/كروكي_السرية_الاولي.jpg' %}" >
+      {% endif %}
+      {% if x.company_name == "السرية الثانية" %}
+      <img src="{% static 'armydbapp/images/كروكي_السرية_الثانية.jpg' %}" >
+      {% endif %}
+      {% if x.company_name == "السرية الثالثة" %}
+      <img src="{% static 'armydbapp/images/كروكي_السرية_الثالثة.jpg' %}" >
+      {% endif %}
+      {% endfor %}
+  </div>
+</div>
+<div class="dropdown dropleft float-right is-hoverable mx-3">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+       النقاط
+    </button>
+    <div class="dropdown-menu is-hoverable"> 
+    {% for squad in squads %}
+    <a  class="dropdown-item" href="{% url 'armydbapp:map_builder' %}?working_map={{squad.squad_name}}">{{squad.squad_name}}</a>  
+    {% endfor %}
+    </div>  
+</div>
+
+ 
+  
+
+{% endblock content %}

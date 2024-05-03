@@ -1,0 +1,271 @@
+﻿{% extends "armydbapp/soldier_admin_base.html" %}
+{% block content %}
+{% load static %}
+
+<style>
+
+.pagination {
+    text-align: center;
+    margin-top: 1em;
+    justify-content: center !important;
+}
+
+.pagination-number {
+    padding: 0.5em 0.8em;
+    border-radius: 2px;
+    color: #fff;
+    background-color: #6D85C7;
+}
+
+.pagination-number:hover, .pagination-current {
+    background-color: #3354AA;      
+}
+
+.pagination-action {
+    margin: 0 0.1em;
+    display: inline-block;
+    padding: 0.5em 0.5em;
+    color: black !important;
+    background-color: #3354AA; 
+    font-size: 1.3em;
+}
+.pagination-number:hover { color: #fff}
+
+.pagination-action:hover, .pagination-previous, .pagination-next {
+    color: #3354AA;  
+}
+
+
+ table tr th {
+    font-size: 2px;
+    background-color:#00d1b2;
+  }
+  
+  
+  
+
+  
+  li {
+      float: right;
+  }
+  
+  li a, .dropbtn {
+      display: inline-block;
+      color: black;
+      text-align: center;
+      
+      text-decoration: none;
+  }
+  
+  li a:hover, .dropdown:hover .dropbtn {
+      background-color: rgb(4, 0, 255);
+  }
+  
+  li.dropdown {
+      display: inline-block;
+  }
+  
+  .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+  }
+  
+  .dropdown-content a {
+      color: black;
+      padding: 12px 10px;
+      text-decoration: none;
+      display: block;
+      text-align: right;
+  }
+  
+  .dropdown-content a:hover {background-color: #f1f1f1;}
+  
+  .dropdown:hover .dropdown-content {
+      display: block;
+  }
+  .dropbtn {
+      width: 160px;}
+
+  
+    }
+
+  .dropdown-menu{
+    text-align: center;
+  }
+  </style>
+<div class="container">
+  <div class="row justify-content-center mb-5">
+
+      <div>
+          <a type="button" class="btn btn-primary mx-3" href="{% url 'armydbapp:add_officer' %}">إضافة ضابط</a>
+      </div>
+
+
+</div>
+</div>
+
+<div class="pagination mb-4">
+
+  {% if officer_list.has_previous %}
+    <a class="pagination-action arabic" href="?page=1">
+     <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+    </a>
+    <a class="pagination-action arabic" href="?page={{ officer_list.previous_page_number }}">
+      <i class="fa fa-angle-right" aria-hidden="true"></i>
+    </a>
+  {% endif %}
+
+  {% for num in officer_list.paginator.page_range %}
+
+    {% if officer_list.number == num %}
+    <span class="pagination-number pagination-current arabic mx-1">{{ num }}</span>
+    {% elif num > officer_list.number|add:'-3' and num < officer_list.number|add:'3' %}
+    <a class="pagination-number arabic mx-1" href="?page={{ num }}">{{ num }}</a>
+    {% endif %}
+
+  {% endfor %}
+
+  {% if officer_list.has_next %}
+    <a class="pagination-action arabic" href="?page={{ officer_list.next_page_number }}">
+      <i class="fa fa-angle-left" aria-hidden="true"></i>
+    </a>
+    <a class="pagination-action arabic" href="?page={{ officer_list.paginator.num_pages }}">
+      <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+    </a>
+  {% endif %}
+
+</div> 
+
+
+<div class="table-responsive">
+<table class="table table-bordered" style="text-align:center;" dir="rtl">
+    <thead >
+      <tr>
+        <th class="border" scope="col" style="text-align: center;">م</th>
+        <th class="border" scope="col" style="text-align:center;">الرتبة</th>
+        <th class="border" scope="col" style="text-align:center;">الاسم</th>
+        <th class="border" scope="col" style="text-align: center;">رقم الأقدمية</th>
+        <th class="border" scope="col" style="text-align: center;">رقم تحقيق الشخصية العسكرية</th>
+        <th class="border" scope="col" style="text-align: center;">التمركز</th>
+        <th class="border" scope="col" style="text-align: center;" >تاريخ شغل الوظيفة</th>
+        <th class="border" scope="col" style="text-align: center;">التخصص</th>
+        <th class="border" scope="col" style="text-align:center;">العنوان</th>
+        <th class="border" scope="col" style="text-align:center;">رقم الهاتف</th>
+        <th class="border" scope="col"></th>
+        
+        
+        
+        
+      </tr>
+    </thead>
+    <tbody>
+      {% for officer in officer_list %}
+      
+        <tr id={{officer.id}}>
+          <td class="arabic border">
+              {{forloop.counter0|add:officer_list.start_index }} 
+          </td>
+        
+            <td class="arabic border">
+              {{officer.rank}}
+            </td>
+          <td class="border" style="text-align: center; min-width: 250px;">
+            <a href="{% url 'armydbapp:officer_information' %}?officer_id={{officer.officer_id}}">{{officer.name}}</a>
+            {% if officer.is_at_vacation %}
+              <br><span class="badge badge-secondary">تاريخ العودة: {{officer.return_date|date:"Y/n/j"}}</span>
+            {% endif %}
+            {% if officer.is_at_vacation_sick %}
+              <br><span class="badge badge-secondary">!!!اجازة مرضية!!!</span>
+            {% endif %}
+            {% if officer.is_awaiting_trial %}
+              <br><span class="badge badge-secondary">!!!منتظر مكتب!!!</span>
+              <br><span class="badge badge-secondary">السبب : {{officer.reason_awaiting_trial}}</span>
+            {% endif %}
+            {% if officer.is_absent %}
+              <br><span class="badge badge-secondary">!!!غيــــاب!!!</span>
+            {% endif %}
+            {% if officer.is_out %}
+              <br><span class="badge badge-secondary">!!!{{officer.outing_type}}!!!</span>
+            {% endif %}
+            {% if officer.is_in_mission %}
+              <br><span class="badge badge-secondary">!!!{{officer.mission_type}}!!!</span>
+            {% endif %}
+            {% if officer.is_rewarded and officer.reward_days > 0 %} 
+              <br><span class="badge badge-secondary">عدد أيام المنحة: {{officer.reward_days}} </span>
+            {% endif %}
+            {% if officer.is_at_punishment == True %} 
+                {% for p in officers_punishments %}
+                  {% if p.officer == officer %}
+                    <br><span class="badge badge-secondary">نوع العقوبة: {{p.punishment}}</span>
+                    <br><span class="badge badge-secondary">تاريخ بدأ العقوبة: {{p.start_date|date:"Y/n/j"}} </span>
+                    <br><span class="badge badge-secondary">تاريخ نهاية العقوبة: {{p.end_date|date:"Y/n/j"}}</span>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+          </td>
+          <td class="arabic border">{{officer.exp_number}}</td>
+          <td class="arabic border">{{officer.officer_id}}</td>
+          
+          <td class="arabic border" >{{officer.current_army_unit}}</td>
+          <td class="arabic border">{{officer.service_start_date|date:"Y/n/j"}}</td>
+          
+          
+          
+          <td class="arabic border">{{officer.speciality}}</td>
+          <td class="arabic border" style="text-align: center;">{{officer.adress}}</td>
+          <td class="arabic border">0{{officer.mobile_number}}</td>
+        
+          <td class="border">
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn"><img src="{% static 'armydbapp/images/s1.png' %}" alt="dropdownicon" height="42" width="42"></a>
+                <div class="dropdown-content">
+                    
+                   
+                    <a  href="{% url 'armydbapp:add_img_officer' %}?officer_id={{officer.officer_id}}">إضافة صورة</a>
+                    <a  href="{% url 'armydbapp:add_promotion_officer' %}?officer_id={{officer.officer_id}}">إضافة ترقي</a>
+                   
+                    <a  href="{% url 'armydbapp:add_vacation_officer' %}?officer_id={{officer.officer_id}}">إجازة</a>
+                    <a  href="{% url 'armydbapp:add_vacation_sick_officer' %}?officer_id={{officer.officer_id}}">إجازة مرضية</a>
+                    <a  href="{% url 'armydbapp:mission_officer' %}?officer_id={{officer.officer_id}}">إضافة مأمورية</a>
+                    <a  href="{% url 'armydbapp:no_mission_officer' %}?officer_id={{officer.officer_id}}">إزالة مأمورية</a>
+                    
+                    <a  href="{% url 'armydbapp:change_army_unit_officer' %}?officer_id={{officer.officer_id}}">تغيير التمركز</a>
+                    
+                    <a  href="{% url 'armydbapp:add_punishment_officer' %}?officer_id={{officer.officer_id}}">إضافة عقوبة</a>
+                    <a  href="{% url 'armydbapp:awaiting_trial_officer' %}?officer_id={{officer.officer_id}}">منتظر مكتب</a>
+                    <a  href="{% url 'armydbapp:trial_done_officer' %}?officer_id={{officer.officer_id}}">تم عرضه</a>
+                    <a  href="{% url 'armydbapp:absent' %}?officer_id={{officer.officer_id}}">غيــــاب</a>
+                    <a  href="{% url 'armydbapp:present_officer' %}?officer_id={{officer.officer_id}}">حضور</a>
+                    <a  href="{% url 'armydbapp:delete_officer' %}?officer_id={{officer.officer_id}}">مسح بيانات الضابط</a>
+                </div>
+            </li>
+        </td>
+                    
+        </tr>
+        {% if officer.is_rewarded and officer.is_at_vacation == False and officer.reward_days > 0 %}
+          <script>document.getElementById("{{officer.id}}").style.backgroundColor="green";</script>
+        {% endif %}
+        {% if officer.is_at_vacation == True %}
+          <script>document.getElementById("{{officer.id}}").style.backgroundColor="yellow";</script>
+          {% if officer.is_rewarded and officer.is_at_vacation and officer.reward_days > 0 %}
+          <script>document.getElementsByClassName("reward-days")[0].style.backgroundColor="green";</script>
+          {% endif %}
+        {% endif %}
+        {% if officer.is_at_punishment %}
+        <script>document.getElementById("{{officer.id}}").style.backgroundColor="red";</script>
+        <script>document.getElementById("{{officer.id}}").style.color="white";</script>
+        {% endif %}
+    {% endfor %}
+    <td style="height: 800px"></td>
+    </tbody>
+    
+</table>  
+</div>
+</div>
+</div>
+
+{% endblock content %}

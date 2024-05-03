@@ -1,0 +1,79 @@
+{% extends "armydbapp/soldier_admin_base.html" %}
+{% block content %}
+<form action="{% url 'armydbapp:submit_officer' %}" method="post" enctype="multipart/form-data">
+{% csrf_token %}
+<div>
+    <div class="h1 mb-5" style="position: relative; left: 80%;">إضافة ضابط</div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend"><span class="input-group-text" id="basic-addon3">الاسم</span></div>
+        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="officer-name">
+    </div>
+    <div class="input-group mb-3" dir="rtl" >
+        <div class="input-group-prepend" style="padding-left: 10px;">
+          <span class="input-group-text" id="inputGroupFileAddon01" style="text-align:right;" >الصورة:   </span>
+        </div>
+        
+        <div class="custom-file">
+          <input type="file"  name="officer-img">
+        </div>
+      </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend"><span class="input-group-text" id="basic-addon3">رقم تحقيق الشخصية العسكرية</span></div>
+        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="officer-id">
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend"><span class="input-group-text" id="basic-addon3">رقم الأقدمية</span></div>
+        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="officer-exp-number">
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="inputGroupSelect01">الرتبة</label>
+        </div>
+        <select class="custom-select" id="inputGroupSelect01" name="officer-rank">
+          <option value="ملازم">ملازم</option>
+          <option value="ملازم أول">ملازم أول</option>
+          <option value="نقيب">نقيب</option>
+          <option value="رائد">رائد</option>
+          <option value="مقدم">مقدم</option>
+          <option value="عقيد">عقيد</option>
+
+        </select>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend"><span class="input-group-text" id="basic-addon3">رقم الهاتف</span></div>
+        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="officer-mobile-number">
+    </div>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend"><span class="input-group-text" id="basic-addon3">العنوان</span></div>
+      <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="officer-adress">
+    </div>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+          <label class="input-group-text" for="inputGroupSelect01">التخصص</label>
+      </div>
+      <select class="custom-select" id="inputGroupSelect01" name="officer-speciality">
+          <option value="مراقب جوي">دفاع جوي</option>
+          <option value="اشارة دجو">اشارة دجو</option>
+          <option value="مركبات">مركبات</option>          
+      </select>
+  </div>  
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="inputGroupSelect01">التمركز</label>
+        </div>
+        <select class="custom-select" id="inputGroupSelect01" name="officer-army-unit-name">
+          <option value="قيادة الكتيبة">قيادة الكتيبة</option>
+          <option value="ملازم أول">السرية الأولي</option>
+          <option value="قيادة السرية الثانية">السرية الثانية</option>
+          <option value="قيادة السرية الثالثة">السرية الثالثة</option>
+        </select>
+    </div>
+
+    <div class="input-group mb-3">
+        <div class="input-group-prepend"><span class="input-group-text" id="basic-addon3">تاريخ الالتحاق</span></div>
+        <input type="date" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="officer-service-start-date">
+    </div>
+    <button class="btn btn-success" type="submit" style="width:100%;">موافـــق</button>
+</div>
+</form>
+{% endblock content %}

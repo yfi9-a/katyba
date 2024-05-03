@@ -1,0 +1,570 @@
+{% extends "armydbapp/soldier_admin_base.html" %}
+{% block content %}
+{% load static %}
+{% load i18n %}
+
+{% if error %}
+    <h3 style="color: red">{{ error }}</h3>
+{% endif %}
+<style>
+
+  
+h1{
+  font-size: 35px;
+}
+table {
+  width:70%;
+}
+
+table, th, td {
+  font-size: 1.5rem;
+  margin: auto;
+  padding:1%;
+  direction: rtl;
+  border-style: ridge;
+  border: 5px solid  #3a5539;
+  text-align: center;
+  
+}
+.table thead td, .table thead th {
+  text-align:center; 
+  color:white;
+  border:solid  #3a5539;
+  background-color: #689a67;
+  border-width:2px !important; 
+
+}
+.table tbody td {
+  text-align:center; 
+ 
+  border:solid  #3a5539;
+  border-width:2px !important; 
+
+}
+.table tbody th {
+  color:white;
+  text-align:center; 
+  background-color: #689a67;
+  border:solid #3a5539;
+  border-width: 2px !important; 
+
+}
+
+@keyframes wiwa {
+    0% { background-color: rgba(12, 189, 151, 0.623); }
+    100% { background-color: rgba(255, 196, 161, 0.548); }
+}
+  
+</style>
+
+<div class="row justify-content-center mt-5 mb-5">
+    <h1 style="font-size:72px; background-color: #689a67; color:rgb(255, 255, 255);border:solid; border-bottom-left-radius: 30px; border-top-right-radius: 30px;   ">
+      التمــــــــام اليومـــــــــــــــي للكتيبــــــــــــة
+    </h1>
+</div>
+<div class="row justify-content-center mt-5 mb-5">
+  <table class="table table-bordered" style="text-align:center; width:70%;" dir="rtl">
+  <thead>
+    <tr>
+    <th >البيان</th>
+    <th >القوة</th>
+    <th>الموجود</th>
+    <th>غياب</th>
+    <th>خارج</th>
+    <th>اجازة</th>
+    <th>اجازة مرضية</th>
+    <th>مأمورية</th>
+    <th>حبس</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      
+
+    <tr>
+        <th>قيادة الكتيبة</th>
+        <td  class="arabic" > 
+          <a href="{% url 'armydbapp:katiba_headquart' %}">
+        {{number_of_soldiers_k10_head}}
+          </a>
+        </td>
+        <td class="arabic">
+          <a href="{% url 'armydbapp:present_list' %}?place=s" >{{number_here_k10_head}}</a>
+        </td>
+        <td class="arabic">
+          <a href="{% url 'armydbapp:absent_indexList' %}?place=s" >{{number_absent_k10_head}}</a>
+        </td>
+        <td>
+          <a href="{% url 'armydbapp:out_list' %}?place=s" >
+            <div class="arabic">
+            {{number_out_k10_head}}
+            </div>
+          </a>
+        </td>
+
+        <td>
+          <a href="{% url 'armydbapp:vacation_list' %}?place=s" >
+            <div class="arabic">
+            {{number_of_at_vacation_k10_head}}
+            </div>
+          </a>
+        </td>
+
+        <td>
+          <a href="{% url 'armydbapp:vacation_sick_list' %}?place=s" >
+            <div class="arabic">
+        {{number_of_at_vacation_sick_k10_head}}
+            </div>
+          </a>
+        </td>
+
+
+        <td>
+          <a href="{% url 'armydbapp:mission_list' %}?place=s" >
+            <div class="arabic">
+        {{number_mission_k10_head}}
+      </div>
+    </a>
+  </td>
+
+        <td class="arabic">
+
+        {{number_prisioned_k10_head}}
+
+        </td>
+    </tr>
+
+    <tr>
+        <th> السرية الاولي</th>
+        
+        <td > 
+            <a  href="{% url 'armydbapp:s1_all' %}">
+              <div  class="arabic">{{number_of_soldiers_s1_head}}</div>
+           </a>
+        </td>
+        <td >
+          <a href="{% url 'armydbapp:present_list' %}?place=s1" ><div class="arabic">{{number_here_s1_head}}</div></a>
+        </td>
+        <td>
+          <a href="{% url 'armydbapp:absent_indexList' %}?place=s1" >
+            <div class="arabic">
+            {{number_absent_s1_head}}
+            </div>
+          </a>
+        </td>
+        <td>
+          <a href="{% url 'armydbapp:out_list' %}?place=s1" >
+            <div class="arabic">
+            {{number_out_s1_head}}
+            </div>
+          </a>
+      </td>
+
+      <td>
+          <a href="{% url 'armydbapp:vacation_list' %}?place=s1" >
+            <div class="arabic">
+        {{number_of_at_vacation_s1_head}}
+          </div>
+        </a>
+      </td>
+
+      <td>
+        <a href="{% url 'armydbapp:vacation_sick_list' %}?place=s1" >
+          <div class="arabic">
+        {{number_of_at_vacation_sick_s1_head}}
+          </div>
+        </a>
+      </td>
+
+      <td>
+        <a href="{% url 'armydbapp:mission_list' %}?place=s1" >
+          <div class="arabic">
+        {{number_mission_s1_head}}
+      </div>
+    </a>
+  </td>
+
+        <td class="arabic">
+
+        {{number_prisioned_s1_head}}
+
+        </td>
+    </tr>
+
+    <tr>
+        <th>السرية الثانية</th>
+        
+        <td  >
+            <a href="{% url 'armydbapp:s2_all' %}">
+          <div class="arabic">{{number_of_soldiers_s2_head}}</div>
+          </a>
+        </td>
+        <td >
+          <a href="{% url 'armydbapp:present_list' %}?place=s2" ><div class="arabic">{{number_here_s2_head}}</div></a>
+        </td>
+        <td >
+            <a href="{% url 'armydbapp:absent_indexList' %}?place=s2" ><div class="arabic">
+        {{number_absent_s2_head}}
+        </div>
+            </a>
+        </td>
+        <td>
+          <a href="{% url 'armydbapp:out_list' %}?place=s2" >
+            <div class="arabic">
+            {{number_out_s2_head}}
+            </div>
+          </a>
+        </td>
+
+        <td>
+          <a href="{% url 'armydbapp:vacation_list' %}?place=s2" >
+            <div class="arabic">
+            {{number_of_at_vacation_s2_head}}
+            </div>
+          </a>
+        </td>
+
+        <td>
+          <a href="{% url 'armydbapp:vacation_sick_list' %}?place=s2" >
+            <div class="arabic">
+              {{number_of_at_vacation_sick_s2_head}}
+            </div>
+          </a>
+        </td>
+
+
+        <td>
+          <a href="{% url 'armydbapp:mission_list' %}?place=s2" >
+            <div class="arabic">
+        {{number_mission_s2_head}}
+      </div>
+    </a>
+  </td>
+
+        <td class="arabic">
+
+        {{number_prisioned_s2_head}}
+
+        </td>
+    </tr>
+
+    <tr>
+        <th>السرية الثالثة</th>
+        
+        <td  >
+            <a href="{% url 'armydbapp:s3_all' %}">
+          <div class="arabic" >{{number_of_soldiers_s3_head}}</div>
+            </a>
+        </td>
+          
+        <td >
+          <a href="{% url 'armydbapp:present_list' %}?place=s3" ><div class="arabic">{{number_here_s3_head}} </div></a>
+        </td>
+        <td >
+            <a href="{% url 'armydbapp:absent_indexList' %}?place=s3" ><div class="arabic">
+        {{number_absent_s3_head}}
+      </div></a>
+      </td>
+      <td>
+        <a href="{% url 'armydbapp:out_list' %}?place=s3" >
+          <div class="arabic">
+          {{number_out_s3_head}}
+          </div>
+        </a>
+      </td>
+
+      <td>
+        <a href="{% url 'armydbapp:vacation_list' %}?place=s3" >
+          <div class="arabic">
+            {{number_of_at_vacation_s3_head}}
+          </div>
+        </a>
+      </td>
+
+      <td>
+        <a href="{% url 'armydbapp:vacation_sick_list' %}?place=s3" >
+          <div class="arabic">
+        {{number_of_at_vacation_sick_s3_head}}
+          </div>
+        </a>
+      </td>
+
+      <td>
+        <a href="{% url 'armydbapp:mission_list' %}?place=s3" >
+          <div class="arabic">
+        {{number_mission_s3_head}}
+          </div>
+        </a>
+      </td>
+
+        <td class="arabic">
+
+        {{number_prisioned_s3_head}}
+
+        </td>
+    </tr>
+    <th>الاجمالي</th>
+      <td class="arabic" >
+        <a href="{% url 'armydbapp:soldier_list' %}">
+      {{number_of_soldiers}}
+    </a>
+      </td>
+      <td class="arabic">
+      <a href="{% url 'armydbapp:present_list' %}?place=all" >{{number_here}} </a>
+      </td>
+      <td class="arabic">
+          <a href="{% url 'armydbapp:absent_indexList' %}?place=all" >{{number_absent}}</a>
+      </td>
+      <td class="arabic">
+          <a href="{% url 'armydbapp:out_list' %}?place=all" >{{number_out}}</a>
+      </td>
+
+      <td class="arabic">
+          <a href="{% url 'armydbapp:vacation_list' %}?place=all" >{{number_of_at_vacation}}</a>
+      </td>
+
+      <td class="arabic">
+        <a href="{% url 'armydbapp:vacation_sick_list' %}?place=all" >{{number_of_at_vacation_sick}}</a>
+      </td>
+
+      <td class="arabic">
+        <a href="{% url 'armydbapp:mission_list' %}?place=all" >{{number_mission}}</a>
+      </td>
+      <td class="arabic">
+
+      {{number_prisioned}}
+
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div class="row justify-content-center mt-5 mb-5">
+    <h1 style="font-size:72px; background-color: #689a67; color:rgb(255, 255, 255);border:solid; border-bottom-left-radius: 30px; border-top-right-radius: 30px;   ">
+      بيــــــــــانــــات هــــــــامة
+    </h1>
+</div>          
+<div class="row justify-content-center mt-5 mb-5">
+  <table class="table table-bordered" style="text-align:center; width:70%;" dir="rtl">
+  <thead>
+    <tr>
+      <th style="text-align:center;">المطلوب عمل خطة غيار لهم</th>
+      <th style="text-align:center;">المتأخرين عن الاجازة</th>
+      <th style="text-align:center;">عودة اليوم</th>
+      <th style="text-align:center;">الموقع عليهم عقوبات</th>
+      <th style="text-align:center;">منتظرين مكتب</th>
+      <th style="text-align:center;">غياب</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td  id="lala1" style="text-align:center;">
+        <a href="{% url 'armydbapp:late_unit_list' %}"  class="arabic">{{number_late_unit}}</a>
+        {% if number_late_unit > "0" %}
+        <script>
+          document.getElementById("lala1").style.animation = "wiwa";
+          document.getElementById("lala1").style.animationDuration = "3s";
+          document.getElementById("lala1").style.animationIterationCount = "infinite";
+        </script>
+        {% endif %}
+      </td>
+      
+        <td  id="lala2" style="text-align:center;">
+            <a href="{% url 'armydbapp:late_vacation_list' %}"  class="arabic">{{number_late_vacation}}</a>
+            {% if number_late_vacation > "0" %}
+            <script>
+              document.getElementById("lala2").style.animation = "wiwa";
+              document.getElementById("lala2").style.animationDuration = "3s";
+              document.getElementById("lala2").style.animationIterationCount = "infinite";
+            </script>
+            {% endif %}
+        </td>
+        
+        <td  id="lala3" style="text-align:center;">
+          <a href="{% url 'armydbapp:return_today_list' %}"  class="arabic">{{number_returning}}</a>
+              {% if number_returning > "0" %}
+              <script>
+                document.getElementById("lala3").style.animation = "wiwa";
+                document.getElementById("lala3").style.animationDuration = "3s";
+                document.getElementById("lala3").style.animationIterationCount = "infinite";
+              </script>
+              {% endif %}
+        </td>
+        
+        <td  id="lala4" style="text-align:center;">
+            <a href="{% url 'armydbapp:punished_list' %}"  class="arabic"> {{number_punished}}</a>
+            {% if number_punished > "0" %}
+            <script>
+              document.getElementById("lala4").style.animation = "wiwa";
+              document.getElementById("lala4").style.animationDuration = "3s";
+              document.getElementById("lala4").style.animationIterationCount = "infinite";
+            </script>
+            {% endif %}
+        </td>
+        <td id="lala5" style="text-align:center;">
+          <a href="{% url 'armydbapp:awaiting_trial_list' %}"  class="arabic"> {{awaiting_trial}}</a>
+            {% if awaiting_trial > "0" %}
+            <script>
+              document.getElementById("lala5").style.animation = "wiwa";
+              document.getElementById("lala5").style.animationDuration = "3s";
+              document.getElementById("lala5").style.animationIterationCount = "infinite";
+            </script>
+            {% endif %}
+        </td>
+        <td id="lala6" style="text-align:center;"> 
+          <a href="{% url 'armydbapp:absent_list' %}"  class="arabic"> {{number_absent}}</a>
+            {% if number_absent > "0" %}
+            <script>
+              document.getElementById("lala6").style.animation = "wiwa";
+              document.getElementById("lala6").style.animationDuration = "3s";
+              document.getElementById("lala6").style.animationIterationCount = "infinite";
+            </script>
+            {% endif %}
+        </td>
+
+    </tr>
+  </tbody>
+</table>
+</div> 
+<div class="row justify-content-center mt-5 mb-5">
+  <h1 style="font-size:72px; background-color: #689a67; color:rgb(255, 255, 255);border:solid; border-bottom-left-radius: 30px; border-top-right-radius: 30px;   ">
+    موقف اخر صرفية
+  </h1>
+</div>          
+<div class="row justify-content-center mt-5 mb-5">
+<table class="table table-bordered" style="text-align:center; width:70%;" dir="rtl">
+<thead>
+  <tr>
+    <th style="text-align:center;">بدون اخر صرفية</th>
+    <th style="text-align:center;">تم استلام اخر صرفية و لم يتم الدرج بالماهية</th>
+    <th style="text-align:center;">تم الدرج بالماهية</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td   style="text-align:center;" class="arabic">
+       <a href="{% url 'armydbapp:sarfaya_list' %}#A">{{no_sarfaya}} </a>
+      </td>
+    <td   style="text-align:center;" class="arabic">
+      <a href="{% url 'armydbapp:sarfaya_list' %}#B"> {{no_salary}} </a>
+    </td>
+    <td   style="text-align:center;" class="arabic">
+      <a href="{% url 'armydbapp:sarfaya_list' %}#C">  {{salary}} </a>
+    </td>
+  </tr>
+</tbody>
+</table>
+</div> 
+<div class="row justify-content-center mt-5 mb-5">
+  <h1 style="font-size:72px; background-color: #689a67; color:rgb(255, 255, 255);border:solid; border-bottom-left-radius: 30px; border-top-right-radius: 30px;   ">
+    الفئــــــــات
+  </h1>
+</div>                
+<div class="row justify-content-center mt-5 mb-5">
+  <table class="table table-bordered" style="text-align:center; width:70%;" dir="rtl">
+    <thead>
+      <tr>
+        <th >البيان</th>
+        <th>راتب عالي</th>
+        <th>مجند</th>
+        <th >الاجمالي</th>
+      </tr>
+    </thead>
+    <tbody id="specialities" >
+      <script>
+      var sum_number_of_specialities_sub_officer = {{sum_number_of_specialities_sub_officer|safe}};
+      var number_of_specialities_sub_officer = {{number_of_specialities_sub_officer|safe}};
+      var sum_number_of_specialities = {{sum_number_of_specialities|safe}};
+      var number_of_specialities = {{number_of_specialities|safe}};
+      var specialities = {{specialities|safe}};
+      var tbody = document.getElementById("specialities");
+      for (i = 0; i < specialities.length; i++) { 
+        var row = tbody.insertRow(i);
+        var cell0 = row.insertCell(0);
+        var cell1 = row.insertCell(1);
+        var cell2 = row.insertCell(2);
+        var cell3 = row.insertCell(3);
+        cell0.outerHTML = "<th>" + specialities[i] + "</th>";
+        cell1.innerHTML = number_of_specialities_sub_officer[i];
+        cell1.classList.add("arabic");
+        cell2.innerHTML = number_of_specialities[i];
+        cell2.classList.add("arabic");
+        cell3.innerHTML = eval(number_of_specialities[i] + "+" + number_of_specialities_sub_officer[i]);
+        cell3.classList.add("arabic");
+      }
+      var lenght_of_list = specialities.length; 
+      var row = tbody.insertRow(lenght_of_list);
+      var cell0 = row.insertCell(0);
+      var cell1 = row.insertCell(1);
+      var cell2 = row.insertCell(2);
+      var cell3 = row.insertCell(3);
+      cell0.outerHTML = "<th>" + "الاجمالي" + "</th>";
+      cell1.innerHTML = sum_number_of_specialities_sub_officer;
+      cell1.classList.add("arabic");
+      cell2.innerHTML = sum_number_of_specialities;
+      cell2.classList.add("arabic");
+      cell3.innerHTML = sum_number_of_specialities + sum_number_of_specialities_sub_officer;
+      cell3.classList.add("arabic");
+      </script>
+    </tbody>
+  </table>
+  </div>
+  <div class="row justify-content-center mt-5 mb-5">
+    <h1 style="font-size:72px; background-color: #689a67; color:rgb(255, 255, 255);border:solid; border-bottom-left-radius: 30px; border-top-right-radius: 30px;   ">
+      يومية عددية بفئات دفعات الرديف
+    </h1>
+</div>                                
+<div class="table-responsive">
+  <table class="table table-bordered" style="text-align:center; text-orientation:sideways;" dir="rtl">
+    <thead>
+      <tr id= "bayan_dof3at_radif">
+        <th >البيان</th>
+        <script>
+        var dof3at = {{dof3at|safe}};
+        var row = document.getElementById("bayan_dof3at_radif");
+        for (i = 1; i < dof3at.length+1 ; i++) { 
+        var cell0 = row.insertCell(i);
+        cell0.outerHTML = "<th class='arabic' style='text-align:center; text-orientation:sideways;'>" + dof3at[i-1] + "</th>";
+      }
+      var cell0 = row.insertCell();
+      cell0.outerHTML = "<th>" + "الاجمالي" + "</th>";
+        </script>
+      </tr>
+    </thead>
+    <tbody id="body_dof3at_radif">
+      <script>
+      var dof3at = {{dof3at|safe}};
+      var specialities = {{radif_specialities|safe}};
+      var dof3a_number_of_specialities = {{dof3a_number_of_specialities|safe}};
+      var dof3a_total = {{dof3a_total|safe}};
+      var total_speciality = {{total_speciality|safe}}
+
+      var tbody = document.getElementById("body_dof3at_radif");
+      for (i = 0; i < specialities.length ; i++) { 
+        var row = tbody.insertRow(i);
+        var cell0 = row.insertCell(0);
+        cell0.outerHTML = "<th class='arabic' style='font-size:14px;'>" + specialities[i] + "</th>";
+        for (j = 1; j < dof3at.length+1 ; j++) {
+          var cell1 = row.insertCell(j);
+          cell1.outerHTML = "<td class='arabic'>" + dof3a_number_of_specialities[j-1][i] + "</td>";
+        }
+        var cell_last = row.insertCell();
+        cell_last.outerHTML = "<td class='arabic' style='color: darkred; background-color: rgb(204, 194, 194);'>" + total_speciality[i] + "</td>";
+      }
+      var lenght_of_list = specialities.length; 
+      var row = tbody.insertRow(lenght_of_list);
+      var cell0 = row.insertCell(0);
+      cell0.outerHTML = "<th >" + "الاجمالي" + "</th>";
+
+      for (j = 1; j < dof3at.length+1 ; j++) {
+          var cell1 = row.insertCell(j);
+          cell1.outerHTML = "<td class='arabic' style='color: darkred; background-color: rgb(204, 194, 194);'>" + dof3a_total[j-1] + "</td>";
+        }
+      
+      var cell_total = row.insertCell();
+      cell_total.outerHTML = "<td class='arabic' style='color: darkred; background-color: rgb(204, 194, 194);'>" + {{number_of_soldiers}} + "</td>";
+      </script>
+    </tbody>
+  </table>
+  </div>                              
+{% endblock content %}

@@ -1,0 +1,21 @@
+---
+- name : "automate docker build"
+  hosts : localhost
+  tasks :
+  - name : "stop running container"
+    command : docker stop Katyba-container
+    ignore_errors : yes 
+
+  - name : "delete runing container"
+    command : docker rm Katyba-container
+    ignore_errors : yes 
+
+  - name : "delete image"
+    command : docker rmi yfi9a/katybasystem:1.0.0
+    ignore_errors : yes 
+
+  - name : "build new image"
+    command : docker build . -t yfi9a/katybasystem:1.0.0
+
+  - name : "push image"
+    command : docker push yfi9a/katybasystem:1.0.0

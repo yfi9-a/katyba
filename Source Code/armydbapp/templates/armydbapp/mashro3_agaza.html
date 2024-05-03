@@ -1,0 +1,375 @@
+{% extends "armydbapp/soldier_admin_base.html" %}
+{% block content %}
+{% load static %}
+<style>
+.pagination {
+    text-align: center;
+    margin-top: 1em;
+    justify-content: center !important;
+}
+
+.pagination-number {
+    padding: 0.5em 0.8em;
+    border-radius: 2px;
+    color: #fff;
+    background-color: #6D85C7;
+}
+
+.pagination-number:hover, .pagination-current {
+    background-color: #3354AA;      
+}
+
+.pagination-action {
+    margin: 0 0.1em;
+    display: inline-block;
+    padding: 0.5em 0.5em;
+    color: black !important;
+    background-color: #3354AA; 
+    font-size: 1.3em;
+}
+.pagination-number:hover { color: #fff}
+
+.pagination-action:hover, .pagination-previous, .pagination-next {
+    color: #3354AA;  
+}
+
+
+ table tr th {
+    font-size: 2px;
+    background-color:#00d1b2;
+  }
+  
+  
+  
+
+  
+  li {
+      float: right;
+  }
+  
+  li a, .dropbtn {
+      display: inline-block;
+      color: black;
+      text-align: center;
+      
+      text-decoration: none;
+  }
+  
+  li a:hover, .dropdown:hover .dropbtn {
+      background-color: rgb(4, 0, 255);
+  }
+  
+  li.dropdown {
+      display: inline-block;
+  }
+  
+  .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+  }
+  
+  .dropdown-content a {
+      color: black;
+      padding: 12px 10px;
+      text-decoration: none;
+      display: block;
+      text-align: right;
+  }
+  
+  .dropdown-content a:hover {background-color: #f1f1f1;}
+  
+  .dropdown:hover .dropdown-content {
+      display: block;
+  }
+  .dropbtn {
+      width: 160px;}
+
+  
+    }
+
+  .dropdown-menu{
+    text-align: center;
+  }
+  </style>
+
+  <div class="pagination mb-4">
+
+        {% if mashro3_awel.has_previous %}
+          <a class="pagination-action arabic" href="?page=1">
+           <i class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></i>
+          </a>
+          <a class="pagination-action arabic" href="?page={{ mashro3_awel.previous_page_number }}">
+            <i class="glyphicon glyphicon-arrow-right" aria-hidden="true"></i>
+          </a>
+        {% endif %}
+      
+        {% for num in mashro3_awel.paginator.page_range %}
+      
+          {% if mashro3_awel.number == num %}
+          <span class="pagination-number pagination-current arabic mx-1">{{ num }}</span>
+          {% elif num > mashro3_awel.number|add:'-3' and num < mashro3_awel.number|add:'3' %}
+          <a class="pagination-number arabic mx-1" href="?page={{ num }}">{{ num }}</a>
+          {% endif %}
+      
+        {% endfor %}
+      
+        {% if mashro3_awel.has_next %}
+          <a class="pagination-action arabic" href="?page={{ mashro3_awel.next_page_number }}">
+            <i class="glyphicon glyphicon-arrow-left" aria-hidden="true"></i>
+          </a>
+          <a class="pagination-action arabic" href="?page={{ mashro3_awel.paginator.num_pages }}">
+            <i class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></i>
+          </a>
+        {% endif %}
+      
+      </div> 
+
+  <div class="table-responsive">
+  <table class="table table-bordered" style="text-align:center; float:right;" dir="rtl">
+      <thead >
+          <tr><th colspan="5" style="text-align:center;">المشروع الأول</th></tr>
+        <tr>
+          <th class="border" scope="col" style="text-align: center;">م</th>
+          <th class="border" scope="col" style="text-align:center;">الاسم</th>
+          <th class="border" scope="col" style="text-align:center;" colspan="3" > مشروع اجازة</th>
+        </tr>
+      </thead>
+      <tbody>
+            {% for soldier in mashro3_awel %}
+            
+              <tr id={{soldier.id}}>
+                <td class="arabic border">
+                    {{forloop.counter0|add:mashro3_awel.start_index }} 
+                </td>
+                <td class="border" style="text-align: center; min-width: 250px;">
+                  <a href="{% url 'armydbapp:soldier_information' %}?soldier_id={{soldier.soldier_id}}">{{soldier.name}}</a>
+                    </td>
+                    <td style="width:1px;">
+            <form action="{% url 'armydbapp:vacation_choice' %}" method="post" >
+              {% csrf_token %}
+                <input type="hidden" name="soldier_number" value={{soldier.soldier_id}} >
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name={{soldier.id_tag}} onChange="form.submit();" value="1" 
+                {% if soldier.vacation_choice == 1 %} checked="checked"
+                {% else %}
+                {% endif %}
+              >
+              <label class="form-check-label" for="inlineRadio1" > الأول</label>
+            </div>
+          </td>
+          <td style="width:1px;">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name={{soldier.id_tag}} onChange="form.submit();" value="2" 
+              {% if soldier.vacation_choice == 2 %} checked="checked"
+              {% else %}
+              {% endif %}
+              >
+              <label class="form-check-label" for="inlineRadio2" > الثاني</label>
+            </div>
+          </td>
+          <td style="width:1px;">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name={{soldier.id_tag}} onChange="form.submit();" value="3" 
+              {% if soldier.vacation_choice == 3 %} checked="checked"
+              {% else %}
+              {% endif %}
+              >
+              <label class="form-check-label" for="inlineRadio3"> الثالث</label>
+             </div>
+         </form>
+          </td>
+            {% endfor %}
+        </tbody>
+    
+    </table>  
+    </div>
+
+
+    <div class="pagination mb-4">
+            
+            {% if mashro3_tani.has_previous %}
+              <a class="pagination-action arabic" href="?page=1">
+               <i class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></i>
+              </a>
+              <a class="pagination-action arabic" href="?page={{ mashro3_tani.previous_page_number }}">
+                <i class="glyphicon glyphicon-arrow-right" aria-hidden="true"></i>
+              </a>
+            {% endif %}
+          
+            {% for num in mashro3_tani.paginator.page_range %}
+          
+              {% if mashro3_tani.number == num %}
+              <span class="pagination-number pagination-current arabic mx-1">{{ num }}</span>
+              {% elif num > mashro3_tani.number|add:'-3' and num < mashro3_tani.number|add:'3' %}
+              <a class="pagination-number arabic mx-1" href="?page={{ num }}">{{ num }}</a>
+              {% endif %}
+          
+            {% endfor %}
+          
+            {% if mashro3_tani.has_next %}
+              <a class="pagination-action arabic" href="?page={{ mashro3_tani.next_page_number }}">
+                <i class="glyphicon glyphicon-arrow-left" aria-hidden="true"></i>
+              </a>
+              <a class="pagination-action arabic" href="?page={{ mashro3_tani.paginator.num_pages }}">
+                <i class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></i>
+              </a>
+            {% endif %}
+          
+          </div> 
+    
+      <div class="table-responsive">
+      <table class="table table-bordered" style="text-align:center; float:right;" dir="rtl">
+          <thead >
+              <tr><th colspan="5" style="text-align:center;">المشروع الثاني</th></tr>
+            <tr>
+              <th class="border" scope="col" style="text-align: center;">م</th>
+              <th class="border" scope="col" style="text-align:center;">الاسم</th>
+              <th class="border" scope="col" style="text-align:center;" colspan="3" > مشروع اجازة</th>
+            </tr>
+          </thead>
+          <tbody>
+                {% for soldier in mashro3_tani %}
+                
+                  <tr id={{soldier.id}}>
+                    <td class="arabic border">
+                        {{forloop.counter0|add:mashro3_tani.start_index }} 
+                    </td>
+                    <td class="border" style="text-align: center; min-width: 250px;">
+                      <a href="{% url 'armydbapp:soldier_information' %}?soldier_id={{soldier.soldier_id}}">{{soldier.name}}</a>
+                        </td>
+                        <td style="width:1px;">
+            <form action="{% url 'armydbapp:vacation_choice' %}" method="post" >
+              {% csrf_token %}
+                <input type="hidden" name="soldier_number" value={{soldier.soldier_id}} >
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name={{soldier.id_tag}} onChange="form.submit();" value="1" 
+                {% if soldier.vacation_choice == 1 %} checked="checked"
+                {% else %}
+                {% endif %}
+              >
+              <label class="form-check-label" for="inlineRadio1" > الأول</label>
+            </div>
+          </td>
+          <td style="width:1px;">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name={{soldier.id_tag}} onChange="form.submit();" value="2" 
+              {% if soldier.vacation_choice == 2 %} checked="checked"
+              {% else %}
+              {% endif %}
+              >
+              <label class="form-check-label" for="inlineRadio2" > الثاني</label>
+            </div>
+          </td>
+          <td style="width:1px;">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name={{soldier.id_tag}} onChange="form.submit();" value="3" 
+              {% if soldier.vacation_choice == 3 %} checked="checked"
+              {% else %}
+              {% endif %}
+              >
+              <label class="form-check-label" for="inlineRadio3"> الثالث</label>
+             </div>
+         </form>
+          </td>
+                {% endfor %}
+            </tbody>
+        
+        </table>  
+        </div>
+
+        <div class="pagination mb-4">
+                
+                {% if mashro3_talat.has_previous %}
+                  <a class="pagination-action arabic" href="?page=1">
+                   <i class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></i>
+                  </a>
+                  <a class="pagination-action arabic" href="?page={{ mashro3_talat.previous_page_number }}">
+                    <i class="glyphicon glyphicon-arrow-right" aria-hidden="true"></i>
+                  </a>
+                {% endif %}
+              
+                {% for num in mashro3_talat.paginator.page_range %}
+              
+                  {% if mashro3_talat.number == num %}
+                  <span class="pagination-number pagination-current arabic mx-1">{{ num }}</span>
+                  {% elif num > mashro3_talat.number|add:'-3' and num < mashro3_talat.number|add:'3' %}
+                  <a class="pagination-number arabic mx-1" href="?page={{ num }}">{{ num }}</a>
+                  {% endif %}
+              
+                {% endfor %}
+              
+                {% if mashro3_talat.has_next %}
+                  <a class="pagination-action arabic" href="?page={{ mashro3_talat.next_page_number }}">
+                    <i class="glyphicon glyphicon-arrow-left" aria-hidden="true"></i>
+                  </a>
+                  <a class="pagination-action arabic" href="?page={{ mashro3_talat.paginator.num_pages }}">
+                    <i class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></i>
+                  </a>
+                {% endif %}
+              
+              </div> 
+        
+          <div class="table-responsive">
+          <table class="table table-bordered" style="text-align:center; float:right;" dir="rtl">
+              <thead >
+                  <tr><th colspan="5" style="text-align:center;">المشروع الثالث</th></tr>
+                <tr>
+                  <th class="border" scope="col" style="text-align: center;">م</th>
+                  <th class="border" scope="col" style="text-align:center;">الاسم</th>
+                  <th class="border" scope="col" style="text-align:center;" colspan="3" > مشروع اجازة</th>
+                </tr>
+              </thead>
+              <tbody>
+                    {% for soldier in mashro3_talat %}
+                    
+                      <tr id={{soldier.id}}>
+                        <td class="arabic border">
+                            {{forloop.counter0|add:mashro3_talat.start_index }} 
+                        </td>
+                        <td class="border" style="text-align: center; min-width: 250px;">
+                          <a href="{% url 'armydbapp:soldier_information' %}?soldier_id={{soldier.soldier_id}}">{{soldier.name}}</a>
+                            </td>
+                            <td style="width:1px;">
+            <form action="{% url 'armydbapp:vacation_choice' %}" method="post" >
+              {% csrf_token %}
+                <input type="hidden" name="soldier_number" value={{soldier.soldier_id}} >
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name={{soldier.id_tag}} onChange="form.submit();" value="1" 
+                {% if soldier.vacation_choice == 1 %} checked="checked"
+                {% else %}
+                {% endif %}
+              >
+              <label class="form-check-label" for="inlineRadio1" > الأول</label>
+            </div>
+          </td>
+          <td style="width:1px;">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name={{soldier.id_tag}} onChange="form.submit();" value="2" 
+              {% if soldier.vacation_choice == 2 %} checked="checked"
+              {% else %}
+              {% endif %}
+              >
+              <label class="form-check-label" for="inlineRadio2" > الثاني</label>
+            </div>
+          </td>
+          <td style="width:1px;">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name={{soldier.id_tag}} onChange="form.submit();" value="3" 
+              {% if soldier.vacation_choice == 3 %} checked="checked"
+              {% else %}
+              {% endif %}
+              >
+              <label class="form-check-label" for="inlineRadio3"> الثالث</label>
+             </div>
+         </form>
+          </td>
+                    {% endfor %}
+                </tbody>
+            
+            </table>  
+            </div>
+{% endblock content %}

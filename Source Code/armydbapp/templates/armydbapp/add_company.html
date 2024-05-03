@@ -1,0 +1,23 @@
+{% extends "armydbapp/soldier_admin_base.html" %}
+{% block content %}
+<form action="{% url 'armydbapp:submit_new_company' %}" method="post" enctype="multipart/form-data">
+{% csrf_token %}
+<div>
+    <div class="h1 mb-5" style="position: relative; left: 80%;">إضافة سرية</div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend"><span class="input-group-text" id="basic-addon3">الاسم</span></div>
+        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="company-name">
+    </div>
+    <div class="input-group mb-3" dir="rtl" >
+            <div class="input-group-prepend" style="padding-left: 10px;">
+              <span class="input-group-text" id="inputGroupFileAddon01" style="text-align:right;" >الصورة:   </span>
+            </div>
+            
+            <div class="custom-file">
+              <input type="file"  name="company-img">
+            </div>
+          </div>
+    <button class="btn btn-success" type="submit" style="width:100%;">موافـــق</button>
+</div>
+</form>
+{% endblock content %}

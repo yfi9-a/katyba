@@ -1,0 +1,18 @@
+nav.navbar {
+    background-color: #689a67;
+}
+
+.army-icon{
+    margin-left: 1.5rem;
+    height: 5rem;
+    width: auto;
+}
+
+.home-title{
+    font-size: 3rem;
+    font-weight: 600;
+}
+
+.login-button{
+    font-size: 1.5rem;
+}

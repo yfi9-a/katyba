@@ -1,0 +1,280 @@
+{% extends "armydbapp/soldier_admin_base.html" %}
+{% block content %}
+{% load static %}
+<style>
+.pagination {
+    text-align: center;
+    margin-top: 1em;
+    justify-content: center !important;
+}
+
+.pagination-number {
+    padding: 0.5em 0.8em;
+    border-radius: 2px;
+    color: #fff;
+    background-color: #6D85C7;
+}
+
+.pagination-number:hover, .pagination-current {
+    background-color: #3354AA;      
+}
+
+.pagination-action {
+    margin: 0 0.1em;
+    display: inline-block;
+    padding: 0.5em 0.5em;
+    color: black !important;
+    background-color: #3354AA; 
+    font-size: 1.3em;
+}
+.pagination-number:hover { color: #fff}
+
+.pagination-action:hover, .pagination-previous, .pagination-next {
+    color: #3354AA;  
+}
+
+
+ table tr th {
+    font-size: 2px;
+    background-color:#00d1b2;
+  }
+  
+  
+
+  li {
+      float: right;
+  }
+  
+  li a, .dropbtn {
+      display: inline-block;
+      color: black;
+      text-align: center;
+      
+      text-decoration: none;
+  }
+  
+  li a:hover, .dropdown:hover .dropbtn {
+      background-color: rgb(4, 0, 255);
+  }
+  
+  li.dropdown {
+      display: inline-block;
+  }
+  
+  .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+  }
+  
+  .dropdown-content a {
+      color: black;
+      padding: 12px 10px;
+      text-decoration: none;
+      display: block;
+      text-align: right;
+  }
+  
+  .dropdown-content a:hover {background-color: #f1f1f1;}
+  
+  .dropdown:hover .dropdown-content {
+      display: block;
+  }
+  .dropbtn {
+      width: 160px;}
+
+  
+    }
+
+  .dropdown-menu{
+    text-align: center;
+  }
+  </style>
+
+  <div class="pagination mb-4">
+
+        {% if choice1.has_previous %}
+          <a class="pagination-action arabic" href="?page=1">
+           <i class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></i>
+          </a>
+          <a class="pagination-action arabic" href="?page={{ choice1.previous_page_number }}">
+            <i class="glyphicon glyphicon-arrow-right" aria-hidden="true"></i>
+          </a>
+        {% endif %}
+      
+        {% for num in choice1.paginator.page_range %}
+      
+          {% if choice1.number == num %}
+          <span class="pagination-number pagination-current arabic mx-1">{{ num }}</span>
+          {% elif num > choice1.number|add:'-3' and num < choice1.number|add:'3' %}
+          <a class="pagination-number arabic mx-1" href="?page={{ num }}">{{ num }}</a>
+          {% endif %}
+      
+        {% endfor %}
+      
+        {% if choice1.has_next %}
+          <a class="pagination-action arabic" href="?page={{ choice1.next_page_number }}">
+            <i class="glyphicon glyphicon-arrow-left" aria-hidden="true"></i>
+          </a>
+          <a class="pagination-action arabic" href="?page={{ choice1.paginator.num_pages }}">
+            <i class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></i>
+          </a>
+        {% endif %}
+      
+      </div> 
+
+  <div class="table-responsive">
+  <table class="table table-bordered" style="text-align:center; float:right;" dir="rtl" id="A">
+      <thead >
+          <tr><th colspan="5" style="text-align:center;">بدون اخر صرفية</th></tr>
+        <tr>
+          <th class="border" scope="col" style="text-align: center;">م</th>
+          <th class="border" scope="col" style="text-align:center;">الاسم</th>
+          <th class="border" scope="col" style="text-align:center;"> </th>
+        </tr>
+      </thead>
+      <tbody>
+            {% for soldier in choice1 %}
+            
+              <tr id={{soldier.id}}>
+                <td class="arabic border">
+                    {{forloop.counter0|add:choice1.start_index }} 
+                </td>
+                <td class="border" style="text-align: center; min-width: 250px;">
+                  <a href="{% url 'armydbapp:soldier_information' %}?soldier_id={{soldier.soldier_id}}">{{soldier.name}}</a>
+                    </td>
+                    <td style="width:1px;">
+                      <a  href="{% url 'armydbapp:mawkaf_a5eir_sarfaya' %}?soldier_id={{soldier"></a>
+                      </td>
+                      {% endfor %}
+        </tbody>
+    
+    </table>  
+    </div>
+
+
+    <div class="pagination mb-4">
+            
+            {% if choice2.has_previous %}
+              <a class="pagination-action arabic" href="?page=1">
+               <i class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></i>
+              </a>
+              <a class="pagination-action arabic" href="?page={{ choice2.previous_page_number }}">
+                <i class="glyphicon glyphicon-arrow-right" aria-hidden="true"></i>
+              </a>
+            {% endif %}
+          
+            {% for num in choice2.paginator.page_range %}
+          
+              {% if choice2.number == num %}
+              <span class="pagination-number pagination-current arabic mx-1">{{ num }}</span>
+              {% elif num > choice2.number|add:'-3' and num < choice2.number|add:'3' %}
+              <a class="pagination-number arabic mx-1" href="?page={{ num }}">{{ num }}</a>
+              {% endif %}
+          
+            {% endfor %}
+          
+            {% if choice2.has_next %}
+              <a class="pagination-action arabic" href="?page={{ choice2.next_page_number }}">
+                <i class="glyphicon glyphicon-arrow-left" aria-hidden="true"></i>
+              </a>
+              <a class="pagination-action arabic" href="?page={{ choice2.paginator.num_pages }}">
+                <i class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></i>
+              </a>
+            {% endif %}
+          
+          </div> 
+    
+      <div class="table-responsive">
+      <table class="table table-bordered" style="text-align:center; float:right;" dir="rtl" id="B">
+          <thead >
+              <tr><th colspan="5" style="text-align:center;">تم استلام اخر صرفية و لم يتم الدرج بالماهية</th></tr>
+            <tr>
+              <th class="border" scope="col" style="text-align: center;">م</th>
+              <th class="border" scope="col" style="text-align:center;">الاسم</th>
+              <th class="border" scope="col" style="text-align:center;"> </th>
+            </tr>
+          </thead>
+          <tbody>
+                {% for soldier in choice2 %}
+                
+                  <tr id={{soldier.id}}>
+                    <td class="arabic border">
+                        {{forloop.counter0|add:choice2.start_index }} 
+                    </td>
+                    <td class="border" style="text-align: center; min-width: 250px;">
+                      <a href="{% url 'armydbapp:soldier_information' %}?soldier_id={{soldier.soldier_id}}">{{soldier.name}}</a>
+                        </td>
+                        <td style="width:1px;">
+                          <a  href="{% url 'armydbapp:mawkaf_a5eir_sarfaya' %}?soldier_id={{soldier"></a>
+                          </td>
+                          {% endfor %}
+            </tbody>
+        
+        </table>  
+        </div>
+
+        <div class="pagination mb-4">
+                
+                {% if choice3.has_previous %}
+                  <a class="pagination-action arabic" href="?page=1">
+                   <i class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></i>
+                  </a>
+                  <a class="pagination-action arabic" href="?page={{ choice3.previous_page_number }}">
+                    <i class="glyphicon glyphicon-arrow-right" aria-hidden="true"></i>
+                  </a>
+                {% endif %}
+              
+                {% for num in choice3.paginator.page_range %}
+              
+                  {% if choice3.number == num %}
+                  <span class="pagination-number pagination-current arabic mx-1">{{ num }}</span>
+                  {% elif num > choice3.number|add:'-3' and num < choice3.number|add:'3' %}
+                  <a class="pagination-number arabic mx-1" href="?page={{ num }}">{{ num }}</a>
+                  {% endif %}
+              
+                {% endfor %}
+              
+                {% if choice3.has_next %}
+                  <a class="pagination-action arabic" href="?page={{ choice3.next_page_number }}">
+                    <i class="glyphicon glyphicon-arrow-left" aria-hidden="true"></i>
+                  </a>
+                  <a class="pagination-action arabic" href="?page={{ choice3.paginator.num_pages }}">
+                    <i class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></i>
+                  </a>
+                {% endif %}
+              
+              </div> 
+        
+          <div class="table-responsive">
+          <table class="table table-bordered" style="text-align:center; float:right;" dir="rtl" id="C">
+              <thead >
+                  <tr><th colspan="5" style="text-align:center;">تم الدرج بالماهية</th></tr>
+                <tr>
+                  <th class="border" scope="col" style="text-align: center;">م</th>
+                  <th class="border" scope="col" style="text-align:center;">الاسم</th>
+                  <th class="border" scope="col" style="text-align:center;"> </th>
+                </tr>
+              </thead>
+              <tbody>
+                    {% for soldier in choice3 %}
+                    
+                      <tr id={{soldier.id}}>
+                        <td class="arabic border">
+                            {{forloop.counter0|add:choice3.start_index }} 
+                        </td>
+                        <td class="border" style="text-align: center; min-width: 250px;">
+                          <a href="{% url 'armydbapp:soldier_information' %}?soldier_id={{soldier.soldier_id}}">{{soldier.name}}</a>
+                            </td>
+                            <td style="width:1px;">
+                              <a  href="{% url 'armydbapp:mawkaf_a5eir_sarfaya' %}?soldier_id={{soldier"></a>
+                              </td>
+                              {% endfor %}
+                </tbody>
+            
+            </table>  
+            </div>
+{% endblock content %}
